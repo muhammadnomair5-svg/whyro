@@ -43,6 +43,7 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All projects');
   const [modal, setModal] = useState<'project'|'contributor'|null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notice, setNotice] = useState('');
@@ -188,7 +189,7 @@ export default function App() {
         {visibleProjects.length ? <div className="project-grid">{visibleProjects.map((p,i)=><article className="project-card" key={p.id}>
           <div className={`project-art art-${i%4}`}><div className="art-orb"/><span>{p.category}</span><div className="art-mark">{i%4===0?<BrainCircuit/>:i%4===1?<Cpu/>:i%4===2?<Code2/>:<Rocket/>}</div></div>
           <div className="project-body"><div className="project-meta"><span className="project-type"><Zap size={13}/>{p.category}</span><button className="save-btn" title="Save project" onClick={()=>setNotice('Sign in and save/bookmark features will be enabled in a later release.')}><Bookmark size={16}/></button></div>
-            <h3>{p.title}</h3><p>{p.description}</p><div className="tags">{p.technologies.map(t=><span key={t}>{t}</span>)}</div>
+            <h3><button className="project-title-btn" onClick={()=>setSelectedProject(p)}>{p.title}</button></h3><p>{p.description}</p><div className="tags">{p.technologies.map(t=><span key={t}>{t}</span>)}</div>
             <div className="project-footer"><span className="owner-dot">{p.owner_name.slice(0,1).toUpperCase()}</span><span>{p.owner_name}</span>{p.url&&<a href={p.url} target="_blank" rel="noreferrer">Open project <ArrowRight size={13}/></a>}</div>
           </div>
         </article>)}</div> : <div className="empty-state"><FolderKanban size={34}/><h3>No projects found</h3><p>Try another search or be the first to share something in this category.</p><button className="primary-btn" onClick={()=>setModal('project')}>Publish a project <ArrowRight size={16}/></button></div>}
@@ -225,7 +226,21 @@ export default function App() {
         </form>
       </>}
     </section></div>}
-    <div className="ambient ambient-a"/><div className="ambient ambient-b"/>
+       {selectedProject && <div className="modal-backdrop" onMouseDown={e=>{if(e.target===e.currentTarget)setSelectedProject(null)}}>
+     <section className="modal project-detail-modal" role="dialog" aria-modal="true" aria-labelledby="project-detail-title">
+       <button className="modal-close" onClick={()=>setSelectedProject(null)} aria-label="Close project details"><X/></button>
+       <div className="modal-icon"><FolderKanban/></div>
+       <div className="eyebrow">COMMUNITY PROJECT</div>
+       <h2 id="project-detail-title">{selectedProject.title}</h2>
+       <span className="project-detail-category">{selectedProject.category}</span>
+       <p className="project-detail-description">{selectedProject.description}</p>
+       <h3 className="project-detail-heading">Technologies</h3>
+       <div className="tags">{selectedProject.technologies.map(t=><span key={t}>{t}</span>)}</div>
+       <div className="project-detail-owner"><span className="owner-dot">{selectedProject.owner_name.slice(0,1).toUpperCase()}</span><span>Created by <strong>{selectedProject.owner_name}</strong></span></div>
+       {selectedProject.url && <a className="primary-btn project-detail-link" href={selectedProject.url} target="_blank" rel="noreferrer">Open project <ArrowRight size={16}/></a>}
+     </section>
+   </div>}
+     <div className="ambient ambient-a"/><div className="ambient ambient-b"/>
   </div>;
 }
 

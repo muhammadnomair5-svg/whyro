@@ -40,3 +40,101 @@
     animation: none;
   }
 }
+/* WHYRO project detail view */
+.project-title-btn {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+
+.project-title-btn:hover {
+  color: var(--green);
+}
+
+.project-detail-modal {
+  width: min(620px, 100%);
+}
+
+.project-detail-category {
+  display: inline-block;
+  margin: 4px 0 12px;
+  padding: 5px 9px;
+  border: 1px solid #28553c;
+  border-radius: 7px;
+  color: #9df6c5;
+  background: #10261b;
+  font-size: 11px;
+}
+
+.project-detail-description {
+  color: #b0c8b8;
+  font-size: 13px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.project-detail-heading {
+  margin: 20px 0 8px;
+  font-size: 13px;
+}
+
+.project-detail-owner {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding-top: 14px;
+  border-top: 1px solid #183226;
+  color: #9ab4a4;
+  font-size: 12px;
+}
+
+.project-detail-owner strong {
+  color: #e2f7e9;
+}
+
+.project-detail-link {
+  margin-top: 20px;
+  text-decoration: none;
+}
+.mobile-backdrop {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .mobile-backdrop {
+    display: block;
+    position: fixed;
+    inset: 65px 0 0;
+    width: 100%;
+    height: calc(100dvh - 65px);
+    border: 0;
+    background: rgba(2, 9, 6, 0.72);
+    z-index: 9;
+    cursor: pointer;
+    animation: whyro-backdrop-in 0.2s ease-out;
+  }
+
+  .sidebar {
+    z-index: 10;
+  }
+}
+
+@keyframes whyro-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-backdrop {
+    animation: none;
+  }
+}
