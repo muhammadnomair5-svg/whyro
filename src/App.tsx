@@ -43,7 +43,8 @@ export default function App() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All projects');
   const [modal, setModal] = useState<'project'|'contributor'|null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
   const [projectForm, setProjectForm] = useState({title:'',description:'',category:'AI & Machine Learning',technologies:'',url:''});
@@ -140,16 +141,16 @@ export default function App() {
       <label className="searchbar"><Search size={18}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search projects, technologies, or ideas..."/><kbd>/</kbd></label>
       <div className="top-actions">
         <button className="icon-btn" title="Notifications" onClick={()=>setNotice('You are all caught up.')}><Bell size={19}/></button>
-        {session?.user ? <button className="user-pill" onClick={()=>setMenuOpen(!menuOpen)}>
+        {session?.user ? <button className="user-pill" onClick={()=>setProfileMenuOpen(!profileMenuOpen)}>
           {profile?.avatar_url ? <img src={profile.avatar_url} alt="Profile"/> : <span className="avatar-initial">{(profile?.full_name||'W').slice(0,1).toUpperCase()}</span>}
           <span>{profile?.full_name || session.user.email || 'Member'}</span><ChevronDown size={15}/>
         </button> : <button className="signin-btn" onClick={signIn}><LogIn size={16}/> Sign in</button>}
-        {menuOpen && <div className="profile-menu"><button onClick={()=>{setMenuOpen(false);setModal('project')}}>Publish a project</button><button onClick={signOut}>Sign out</button></div>}
+        {profileMenuOpen && <div className="profile-menu"><button onClick={()=>{setProfileMenuOpen(false);setModal('project')}}>Publish a project</button><button onClick={signOut}>Sign out</button></div>}
       </div>
-      <button className="mobile-menu icon-btn" onClick={()=>setMenuOpen(!menuOpen)} aria-label="Open menu"><Menu/></button>
+      <button className="mobile-menu icon-btn" onClick={()=>setMobileMenuOpen(!mobileMenuOpen)} aria-label="Open menu" aria-expanded={mobileMenuOpen}><Menu/></button>
     </header>
 
-    <aside className={`sidebar ${menuOpen?'sidebar-open':''}`}>
+    <aside className={`sidebar ${mobileMenuOpen?'sidebar-open':''}`}>
       <div className="nav-label">WORKSPACE</div>
       <button className="nav-item active" onClick={()=>{setCategory('All projects');window.scrollTo({top:0,behavior:'smooth'});}}><Compass size={18}/>Home</button>
       <button className="nav-item" onClick={()=>document.getElementById('explore')?.scrollIntoView({behavior:'smooth'})}><Globe2 size={18}/>Explore</button>
