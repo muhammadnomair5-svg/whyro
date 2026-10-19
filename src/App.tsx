@@ -50,7 +50,8 @@ export default function App() {
   const [contributorForm, setContributorForm] = useState({name:'',email:'',area:'AI & Machine Learning',message:''});
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setBoot(false), 1450);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const timer = window.setTimeout(() => setBoot(false), reducedMotion ? 0 : 1450);
     if (supabase) {
       supabase.auth.getSession().then(({data}) => setSession(data.session));
       const { data: listener } = supabase.auth.onAuthStateChange((_event, next) => {
