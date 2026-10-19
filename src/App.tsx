@@ -149,7 +149,7 @@ export default function App() {
       </div>
       <button className="mobile-menu icon-btn" onClick={()=>setMobileMenuOpen(!mobileMenuOpen)} aria-label="Open menu" aria-expanded={mobileMenuOpen}><Menu/></button>
     </header>
-
+    {mobileMenuOpen && <button className="mobile-backdrop" aria-label="Close navigation menu" onClick={() => setMobileMenuOpen(false)} />}
     <aside className={`sidebar ${mobileMenuOpen?'sidebar-open':''}`}>
       <div className="nav-label">WORKSPACE</div>
       <button className="nav-item active" onClick={()=>{setMobileMenuOpen(false);setCategory('All projects');window.scrollTo({top:0,behavior:'smooth'});}}><Compass size={18}/>Home</button>
