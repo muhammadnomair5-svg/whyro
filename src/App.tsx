@@ -141,7 +141,7 @@ export default function App() {
       <label className="searchbar"><Search size={18}/><input value={search} onChange={e=>setSearch(e.target.value)} placeholder="Search projects, technologies, or ideas..."/><kbd>/</kbd></label>
       <div className="top-actions">
         <button className="icon-btn" title="Notifications" onClick={()=>setNotice('You are all caught up.')}><Bell size={19}/></button>
-        {session?.user ? <button className="user-pill" onClick={()=>setProfileMenuOpen(!profileMenuOpen)}>
+        {session?.user ? <button className="user-pill" onClick={()=>setProfileMenuOpen(!profileMenuOpen)} aria-expanded={profileMenuOpen} aria-haspopup="true">
           {profile?.avatar_url ? <img src={profile.avatar_url} alt="Profile"/> : <span className="avatar-initial">{(profile?.full_name||'W').slice(0,1).toUpperCase()}</span>}
           <span>{profile?.full_name || session.user.email || 'Member'}</span><ChevronDown size={15}/>
         </button> : <button className="signin-btn" onClick={signIn}><LogIn size={16}/> Sign in</button>}
@@ -152,10 +152,10 @@ export default function App() {
 
     <aside className={`sidebar ${mobileMenuOpen?'sidebar-open':''}`}>
       <div className="nav-label">WORKSPACE</div>
-      <button className="nav-item active" onClick={()=>{setCategory('All projects');window.scrollTo({top:0,behavior:'smooth'});}}><Compass size={18}/>Home</button>
-      <button className="nav-item" onClick={()=>document.getElementById('explore')?.scrollIntoView({behavior:'smooth'})}><Globe2 size={18}/>Explore</button>
-      <button className="nav-item" onClick={()=>setModal('project')}><FolderKanban size={18}/>Publish project</button>
-      <button className="nav-item" onClick={()=>setModal('contributor')}><Users size={18}/>Join the team</button>
+      <button className="nav-item active" onClick={()=>{setMobileMenuOpen(false);setCategory('All projects');window.scrollTo({top:0,behavior:'smooth'});}}><Compass size={18}/>Home</button>
+      <button className="nav-item" onClick={()=>{setMobileMenuOpen(false);document.getElementById('explore')?.scrollIntoView({behavior:'smooth'});}}><Globe2 size={18}/>Explore</button>
+      <button className="nav-item" onClick={()=>{setMobileMenuOpen(false);setModal('project')}}><FolderKanban size={18}/>Publish project</button>
+      <button className="nav-item" onClick={()=>{setMobileMenuOpen(false);setModal('contributor')}}><Users size={18}/>Join the team</button>
       <div className="sidebar-spacer"/>
       <div className="idea-card"><div className="idea-icon"><Sparkles size={18}/></div><strong>Have an idea?</strong><p>Share what you're building and find your people.</p><button onClick={()=>setModal('project')}>Share a project <ArrowRight size={15}/></button></div>
       <div className="sidebar-foot"><WhyroMark size={25}/><div><b>WHYRO</b><span>A community built by creators.</span></div></div>
